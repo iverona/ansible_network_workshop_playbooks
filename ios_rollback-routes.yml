@@ -1,5 +1,5 @@
 ---
-- name: Add routes on rtr1
+- name: Delete routes on rtr1
   hosts: rtr1
   vars:
      ansible_network_os: ios
@@ -10,7 +10,7 @@
   gather_facts: no
 
   tasks:
-  - name: Add routes on rtr1 
+  - name: Delete routes on rtr1 
     ios_static_route:
       aggregate:
         - { prefix: 192.168.10.0, mask: 255.255.255.0, next_hop: 10.0.0.2 }
