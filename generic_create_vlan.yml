@@ -1,0 +1,17 @@
+---
+- hosts: network
+  connection: network_cli
+    
+  tasks: 
+  - name: "Make sure VLAN is acceptable"
+    assert:
+      that:
+        - "vlan_id > 1"
+        - "vlan_id <= 4095"
+      msg: "vlan_id must be between 2 and 4095"
+
+  - name: Create required VLANs
+    net_vlan:
+      vlan_id: "{{ vlan_id }}"
+      interfaces: "{{ interface }}"
+      name: "{{ vlan_name }}"

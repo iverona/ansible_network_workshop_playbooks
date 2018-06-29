@@ -1,0 +1,33 @@
+---
+- hosts: network
+  connection: network_cli
+  vars:
+    valid_ip: "{{ ip | ipaddr }}"
+    
+  tasks: 
+  - name: "IP is valid"
+    assert: 
+      that: 
+        -  "valid_ip != false"
+      msg: "Not valid IP!"
+
+  - name: "Make sure VLAN is acceptable"
+    assert:
+      that:
+        - "vlan_id > 1"
+        - "vlan_id <= 4095"
+      msg: "vlan_id must be between 2 and 4095"
+
+  - name: Set VLAN IP
+    vyos_vlan:
+      vlan_id: "{{ vlan_id }}"
+      interfaces: "{{ interface }}"
+      address: "{{ ip }}"
+    register: commands
+
+  - debug:
+      var: commands
+
+  
+
+

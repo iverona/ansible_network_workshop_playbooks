@@ -1,0 +1,16 @@
+---
+- hosts: network
+  connection: network_cli
+  vars:
+    network: "{{ ip | ipaddr('network')}}"
+    netmask: "{{ ip | ipaddr('prefix')}}"
+    
+  tasks: 
+  - name: Set route
+    vyos_static_route:
+      prefix: "{{ network }}"
+      mask: "{{ netmask }}"
+      next_hop: "192.168.1.100"
+    register: commands
+
+
