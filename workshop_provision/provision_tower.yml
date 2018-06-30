@@ -9,7 +9,6 @@
       git:
         repo: https://github.com/iverona/ansible_network_workshop_playbooks.git
         dest: /var/lib/awx/projects/ansible_network_workshop/
-      when: false
 
     - name: Install CLI
       yum:
