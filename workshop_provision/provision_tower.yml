@@ -1,0 +1,39 @@
+---
+- name: Configure workshop
+  hosts: ansible
+  become: yes
+  gather_facts: no
+
+  tasks:
+    - name: Clone repo
+      git:
+        repo: https://github.com/iverona/ansible_network_workshop_playbooks.git
+        dest: /var/lib/awx/projects/ansible_network_workshop/
+      when: false
+
+    - name: Install CLI
+      yum:
+        name: ansible-tower-cli
+        state: latest
+
+    - name: Create proyect
+      tower_project:
+          tower_username: admin
+          tower_password: ansible
+          name: "Manual Proyect"
+          organization: Default
+          scm_type: manual
+          local_path: ansible_network_workshop
+          state: present
+
+    - name: Create inventory
+      tower_inventory:
+          tower_username: admin
+          tower_password: ansible
+          organization: Default
+          name: "lab_inventory" # required. The name to use for the inventory.
+          state: present # not required. choices: present;absent. Desired state of the resource.
+
+    - name: Add entries to inventory
+      command: >
+        tower-manage inventory_import --source=/home/student1/networking-workshop/lab_inventory/hosts --inventory-name="lab_inventory"
