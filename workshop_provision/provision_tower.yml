@@ -36,3 +36,7 @@
     - name: Add entries to inventory
       command: >
         tower-manage inventory_import --source=/home/student1/networking-workshop/lab_inventory/hosts --inventory-name="lab_inventory"
+
+    - name: Copy exercises to Tower folder
+      shell: >
+        cp -r /home/student1/networking-workshop/[[:digit:]]* /var/lib/awx/projects/ansible_network_workshop/
