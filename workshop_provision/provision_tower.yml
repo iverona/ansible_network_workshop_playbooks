@@ -40,3 +40,16 @@
     - name: Copy exercises to Tower folder
       shell: >
         cp -r /home/student1/networking-workshop/[[:digit:]]* /var/lib/awx/projects/ansible_network_workshop/
+
+    - name: Create AWX credential
+      tower_credential:
+         name: AWS Workshop credential # required. The name to use for the credential.
+         tower_username: admin
+         tower_password: ansible
+         kind: net
+         ssh_key_data: /home/student1/.ssh/aws-private.pem # not required. Path to SSH private key.
+         organization: Default
+         #project: Manual Proyect
+         state: present # not required. choices: present;absent. Desired state of the resource.
+         username: ec2-user
+        
