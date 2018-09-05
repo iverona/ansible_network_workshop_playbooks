@@ -1,33 +1,27 @@
 ---
-- hosts: network
+- hosts: routers
   connection: network_cli
   vars:
     valid_dns: "{{ extra_dns | ipaddr }}"
-  
-  tasks:  
+
+  tasks:
   - name: Set default DNS
     net_system:
       name_servers:
         - 8.8.8.8
         - 8.8.4.4
-    
+
     register: commands
 
-  - debug:
-      var: commands
-
-  - assert: 
-      that: 
+  - assert:
+      that:
         -  "valid_dns != false"
       msg: "Not valid DNS IP!"
-    when: extra_dns is defined  
+    when: valid_dns != False
 
   - name: Set extra DNS
     net_system:
       name_servers:
         - "{{ extra_dns }}"
     register: commands
-    when: extra_dns is defined 
-      
-  - debug:
-      var: commands
+    when: valid_dns != False
