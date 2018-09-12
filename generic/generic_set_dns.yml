@@ -5,6 +5,9 @@
     valid_dns: "{{ extra_dns | ipaddr }}"
 
   tasks:
+  - debug:
+      var: valid_dns
+
   - name: Set default DNS
     net_system:
       name_servers:
@@ -17,11 +20,11 @@
       that:
         -  "valid_dns != false"
       msg: "Not valid DNS IP!"
-    when: valid_dns != False
+    when: extra_dns is defined
 
   - name: Set extra DNS
     net_system:
       name_servers:
         - "{{ extra_dns }}"
     register: commands
-    when: valid_dns != False
+    when: extra_dns is defined and valid_dns != False
