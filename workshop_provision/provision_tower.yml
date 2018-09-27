@@ -46,7 +46,7 @@
          name: AWS Workshop credential # required. The name to use for the credential.
          tower_username: admin
          tower_password: ansible
-         kind: net
+         kind: ssh
          ssh_key_data: /home/student1/.ssh/aws-private.pem # not required. Path to SSH private key.
          organization: Default
          #project: Manual Proyect
